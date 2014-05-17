@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Protein Builder" default="compile" basedir=".">
+    <property name="dir.src" value="src"/>
+    <property name="dir.build" value="build"/>
+    <property name="dir.dist" value="dist"/>
+    <property name="dir.test" value="test"/>
+    <property name="dir.test.src" value="test/src"/>
+    <property name="dir.reports" value="reports"/>
+    <property name="dir.umls" value="umls"/>
+    <property name="test.class.name" value="ENTER PACKAGE NAME"/>
+        
+    <!--  Create output directories -->
+    
+    <target name="prepare">
+        <mkdir dir="${dir.build}"/>
+        <mkdir dir="${dir.dist}"/>
+        <mkdir dir="${dir.reports}"/>
+        <mkdir dir="${dir.test}"/>
+        <mkdir dir="${dir.test.src}"/>
+        <mkdir dir="${dir.umls}"/>
+    </target>
+    
+    <!-- Delete output directories -->
+    
+    <target name="clean"
+        description="Remove all generated files.">
+        
+        <delete dir="${dir.build}"/>
+        <delete dir="${dir.dist}"/>
+        <delete dir="${dir.reports}"/>
+    </target>
+    
+    <!-- Compile source code -->
+    
+    <target name="compile" depends="prepare"
+        description="Compile all source code">
+        <javac srcdir="${dir.src}" destdir="${dir.build}"/>
+        <javac srcdir="${dir.test.src}" destdir="${dir.build}"
+        classpath="${dir.build}"
+        />
+    </target>
+    
+    <!-- Run unit tests -->
+    <!-- Remember to name tests as XXX_Test.java -->
+        
+    <target name="test" depends="compile">
+      <junit fork="yes" haltonfailure="no">
+                  
+         <batchtest fork ="yes" todir="${dir.reports}">
+            <fileset dir="${dir.test.src}"/>
+         </batchtest>
+         
+         <formatter type="plain"/>
+         <classpath>
+            <!-- Set path to class packages -->
+            <pathelement path="${dir.build}"/>
+         </classpath>
+      </junit>
+    </target>
+    
+    <!-- Create jar file -->
+    
+    <target name="jar" depends="test"
+        description="Generates .jar in the dist directory">
+        <jar jarfile="${dir.dist}/ProteinBuilder.jar"
+            basedir="${dir.build}/proteinbuilder/"
+            excludes="**_Test.class">
+            
+            <!-- Commented out because there is no main method
+            
+            <manifest>
+               <attribute name="Main-Class" value="ENTER CLASS WHERE MAIN METHOD CAN BE FOUND"/>
+            </manifest>
+            
+            -->
+        </jar>
+    </target>
+    
+    <!-- Commented out because there is no main method
+    
+    <target name="run" depends="jar">
+        <java jar="${dir.dist}/ENTER PROJECT NAME.jar" fork="true"/>
+    </target>
+    
+    -->
+    
+</project>
