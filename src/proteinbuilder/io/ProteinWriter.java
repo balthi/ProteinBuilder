@@ -7,20 +7,23 @@ import java.net.URI;
 import proteinbuilder.AminoAcid;
 import proteinbuilder.Protein;
 
+import static proteinbuilder.config.SessionConfig.PROTEIN_FILE_DIRECTORY;
+import static proteinbuilder.config.SessionConfig.PROTEIN_LIST_URI;
+import static proteinbuilder.config.SessionConfig.FORMAT;
+
 public abstract class ProteinWriter
 {
-   private static final String FILE_PATH = "lib/proteins/";
-   private static String EXTENSION;
+   private static final String EXTENSION = "." + FORMAT;
    
    public void writeToFile(Protein protein)
    {
       String out = getString(protein);
-      File f = new File(FILE_PATH + protein.getName() + EXTENSION);
+      File f = new File(PROTEIN_FILE_DIRECTORY + protein.getName() + EXTENSION);
       try
       {
          f.createNewFile();
          URI safe = f.toURI();
-         writeFile(out, safe);
+         writeFile(out, protein.getName(), safe);
       }
       catch(IOException ioe)
       {
@@ -28,17 +31,9 @@ public abstract class ProteinWriter
       }
    }
    
-   protected String getString(Protein protein)
-   {
-      String out = protein.getName() + ":";
-      for(AminoAcid aa : protein)
-      {
-         out = out + aa.toString() + ":";
-      }
-      return out;
-   }
+   protected abstract String getString(Protein protein);
    
-   private void writeFile(String protein, URI file)
+   private void writeFile(String protein, String name, URI file)
    {
       File f = new File(file);
       try

@@ -4,6 +4,8 @@ import java.util.regex.Pattern;
 import java.util.List;
 import java.util.LinkedList;
 
+import static proteinbuilder.config.SessionConfig.DNA_SEQ;
+
 public class DNASequence
 {
    public DNASequence(String sequence)
@@ -22,7 +24,7 @@ public class DNASequence
 
    private boolean isValidSequence(String sequence)
    {
-      return sequence.matches("[acgtACGT]+");
+      return sequence.matches(DNA_SEQ);
    }
    
    /*
@@ -39,7 +41,7 @@ public class DNASequence
    * Returns the Codon sequence represented by this 
    * DNASequence
    */
-   public List<Codon> getCodonSequence()
+   public LinkedList<Codon> getCodonSequence()
    {
       String fits = this.trim();
       LinkedList<Codon> list = new LinkedList();

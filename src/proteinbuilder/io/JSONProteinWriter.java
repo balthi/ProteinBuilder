@@ -6,7 +6,6 @@ import proteinbuilder.Protein;
 
 public class JSONProteinWriter extends ProteinWriter
 {
-   private static String EXTENSION = ".json";
    private static String PROTEIN = "{\"protein\":\"";
    private static String ACIDS = "\"acids\":[";
    private static String CLOSE = "]}";

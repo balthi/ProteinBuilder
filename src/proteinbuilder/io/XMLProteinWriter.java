@@ -6,12 +6,11 @@ import proteinbuilder.Protein;
 
 public class XMLProteinWriter extends ProteinWriter
 {
-   private static String EXTENSION = ".xml";
    private static String PROTEIN = "<protein>";
    private static String CLOSE_PROTEIN = "</protein>";
-   private static String NAME = "<name id=";
+   private static String NAME = "<name Id=";
    private static String CLOSE = "/>";
-   private static String ACID = "<acid id=";
+   private static String ACID = "<acid Id=";
    
    @Override
    protected String getString(Protein protein)

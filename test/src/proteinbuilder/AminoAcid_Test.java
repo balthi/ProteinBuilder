@@ -6,6 +6,7 @@ import junit.framework.TestCase;
 public class AminoAcid_Test extends TestCase
 {
    public static final String GLY="GLYCINE";
+   public static final int NUM_AMINO_ACIDS = 21;
    
    public void testGetName()
    {
@@ -30,5 +31,12 @@ public class AminoAcid_Test extends TestCase
    public void testToString()
    {
       assertEquals("Wrong String returned in testToString", GLY, AminoAcid.GLYCINE.toString());
+   }
+   
+   public void testGetAllAminoAcids()
+   {
+      List<AminoAcid> list = AminoAcid.getAllAminoAcids();
+      assertEquals("Wrong number of amino acids returned in testGetAllAminoAcids", NUM_AMINO_ACIDS, list.size());
+      assertTrue("GLYCINE missing in testGetAllAminoAcids", list.contains(AminoAcid.GLYCINE));
    }
 }

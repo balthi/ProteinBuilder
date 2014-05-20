@@ -1,5 +1,6 @@
 package proteinbuilder;
 
+import java.lang.Comparable;
 import java.lang.IllegalArgumentException;
 import java.util.EnumSet;
 import java.util.ArrayList;
@@ -85,6 +86,21 @@ public enum AminoAcid
    public String getName()
    {
       return name;
+   }
+   
+   /**
+   * Returns a list of all the amino acids in
+   * this enum
+   */
+   public static List<AminoAcid> getAllAminoAcids()
+   {
+      int num = AMINO_ACIDS.size();
+      ArrayList list = new ArrayList(num);
+      for(AminoAcid aa : AMINO_ACIDS)
+      {
+         list.add(aa);
+      }
+      return list;
    }
    
    /**

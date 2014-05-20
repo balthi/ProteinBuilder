@@ -1,11 +1,12 @@
 package proteinbuilder;
 
+import java.lang.Comparable;
 import java.util.LinkedList;
 import java.util.Iterator;
 import proteinbuilder.io.ProteinWriter;
 import proteinbuilder.io.ProteinWriterFactory;
 
-public class Protein implements Comparable, Iterable<AminoAcid>
+public class Protein implements Comparable<Protein>, Iterable<AminoAcid>
 {
    public Protein()
    {
@@ -33,9 +34,8 @@ public class Protein implements Comparable, Iterable<AminoAcid>
    * Compares this protein to p
    */
    @Override
-   public int compareTo(Object o)
+   public int compareTo(Protein p)
    {
-      Protein p = (Protein) o;
       return name.compareTo(p.getName());
    }
    
@@ -45,6 +45,24 @@ public class Protein implements Comparable, Iterable<AminoAcid>
    public String getName()
    {
       return name;
+   }
+   
+   @Override
+   public int hashCode()
+   {
+      int prime = 7;
+      int product = prime * name.hashCode();
+      for(AminoAcid aa : this)
+      {
+         product *= prime*aa.hashCode();
+      }
+      return product;
+   }
+   
+   @Override
+   public boolean equals(Object o)
+   {
+      return this.hashCode() == o.hashCode();
    }
    
    /**
