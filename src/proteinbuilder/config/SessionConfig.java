@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.Properties;
 
-import proteinbuilder.ProteinSet;
+import proteinbuilder.ProteinList;
 import proteinbuilder.io.ProteinReader;
 import proteinbuilder.io.ProteinReaderFactory;
 
@@ -102,18 +102,18 @@ public class SessionConfig
    * Read all files in proteins directory, create a protein
    * from each and add it to the PROTEIN_SET
    */
-   public ProteinSet getProteinsFromFiles()
+   public ProteinList getProteinsFromFiles()
    {
-      ProteinSet ps = new ProteinSet();
+      ProteinList pl = new ProteinList();
       ProteinReader pr;
       File f = new File(PROTEIN_FILE_DIRECTORY);
       File[] proteins = f.listFiles();
       for(int i=0; i < proteins.length; i++)
       {
          pr = ProteinReaderFactory.getReader(proteins[i]);
-         ps.add(pr.getProteinFromFile(proteins[i]));
+         pl.add(pr.getProteinFromFile(proteins[i]));
       }
-      return ps;
+      return pl;
    }
    
    /*

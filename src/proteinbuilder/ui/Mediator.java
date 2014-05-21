@@ -1,34 +1,39 @@
 package proteinbuilder.ui;
 
-public interface Mediator
+public abstract class Mediator
 {
+   public static final String SAVE = "Save";
+   public static final String UNDO = "Undo";
+   public static final String TRANSFER_RIGHT = ">>";
+   public static final String TRANSFER_LEFT = "<<";
+   
    /**
    * Determines the behavior of pressing the ok button
    */
-   public void ok();
+   public abstract void ok();
    
    /**
    * Determines the behavior of pressing the cancel button
    */
-   public void cancel();
+   public abstract void cancel();
    
    /**
    * Determines the behavior of pressing the save button
    */
-   public void save();
+   public abstract void save();
    
    /**
    * Determines the behavior of pressing the undo button
    */
-   public void undo();
+   public abstract void undo();
    
    /**
    * Determines the behavior of pressing the transfer right button
    */
-   public void transferRight();
+   public abstract void transferRight();
    
    /**
    * Determines the behavior of pressing the transfer left button
    */
-   public void transferLeft();
+   public abstract void transferLeft();
 }

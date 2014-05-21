@@ -1,6 +1,7 @@
 package proteinbuilder;
 
 import java.lang.Comparable;
+import java.lang.NullPointerException;
 import java.util.LinkedList;
 import java.util.Iterator;
 import proteinbuilder.io.ProteinWriter;
@@ -31,6 +32,14 @@ public class Protein implements Comparable<Protein>, Iterable<AminoAcid>
    }
    
    /**
+   * Removes all amino acids from the protein
+   */
+   public void clear()
+   {
+      acids.clear();
+   }
+   
+   /**
    * Compares this protein to p
    */
    @Override
@@ -44,6 +53,10 @@ public class Protein implements Comparable<Protein>, Iterable<AminoAcid>
    */
    public String getName()
    {
+      if(name == null)
+      {
+         throw new NullPointerException("Protein has no name");
+      }
       return name;
    }
    
@@ -96,6 +109,12 @@ public class Protein implements Comparable<Protein>, Iterable<AminoAcid>
    public int size()
    {
       return acids.size();
+   }
+   
+   @Override
+   public String toString()
+   {
+      return name;
    }
    
    /**

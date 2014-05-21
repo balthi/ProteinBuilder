@@ -12,36 +12,47 @@ import javax.swing.JTextField;
 
 public class ProteinPane extends JPanel
 {  
+   private JLabel pName;
    private JTextField name;
    private JList proteins, acidList;
-   private JTextArea acids, DNA;
+   private JTextArea acidDisplay, DNA;
    private JButton save, undo, rTrans, lTrans;
    private PBMediator mediator;
    
    private static final int WIDTH = 300;
    private static final int HEIGHT = 150;
    private static final int SHORT = 25;
+   private static final String NAME = "Protein name:";
    
    public ProteinPane()
    {
       mediator = PBMediator.getPBMediator();
       
       //Create elements for the pane
+      pName = new JLabel(NAME);
+      
       name = mediator.getNameField();
       name.setMaximumSize(new Dimension(WIDTH, SHORT));
-      acids = mediator.getAcids();
-      acids.setMinimumSize(new Dimension(WIDTH, HEIGHT));
+      
+      acidDisplay = mediator.getAcids();
+      acidDisplay.setMinimumSize(new Dimension(WIDTH, HEIGHT));
+      acidDisplay.setLineWrap(true);
+      
       proteins = mediator.getProteins();
       proteins.setMinimumSize(new Dimension(WIDTH, HEIGHT-50));
+      
       acidList = mediator.getAcidList();
       acidList.setMinimumSize(new Dimension(HEIGHT, WIDTH));
+      
       DNA = mediator.getDNA();
       DNA.setRows(150);
       DNA.setColumns(300);
+      DNA.setLineWrap(true);
       
       save = mediator.getSaveButton();
-      undo = mediator.getSaveButton();
-      System.out.println(undo.getMinimumSize().toString());
+      save.setMinimumSize(new Dimension(WIDTH/2, 25));
+      undo = mediator.getUndoButton();
+      undo.setMinimumSize(new Dimension(WIDTH/2, 25));
       rTrans = mediator.getRightTransferButton();
       lTrans = mediator.getLeftTransferButton();
       
@@ -57,9 +68,12 @@ public class ProteinPane extends JPanel
       layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
          .addComponent(acidList)
          .addGroup(layout.createSequentialGroup()
+            .addComponent(pName)
             .addComponent(name)
-            .addComponent(acids)
-            .addComponent(save)
+            .addComponent(acidDisplay)
+            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+               .addComponent(save)
+               .addComponent(undo))
             .addComponent(proteins))
          .addGroup(layout.createSequentialGroup()
             .addComponent(rTrans)
@@ -74,9 +88,12 @@ public class ProteinPane extends JPanel
       layout.setHorizontalGroup(layout.createSequentialGroup()
          .addComponent(acidList)
          .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(pName)
             .addComponent(name)
-            .addComponent(acids)
-            .addComponent(save)
+            .addComponent(acidDisplay)
+            .addGroup(layout.createSequentialGroup()
+               .addComponent(save)
+               .addComponent(undo))
             .addComponent(proteins))
          .addGroup(layout.createParallelGroup()
             .addComponent(rTrans)
