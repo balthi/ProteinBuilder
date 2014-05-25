@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.RuntimeException;
 import proteinbuilder.Protein;
 import proteinbuilder.AminoAcid;
 
@@ -16,6 +17,7 @@ public class JSONProteinReader extends ProteinReader
    public Protein getProteinFromFile(File f)
    {
       Protein protein = new Protein();
+      
       try
       {
          BufferedReader br = new BufferedReader(new FileReader(f));
@@ -39,15 +41,16 @@ public class JSONProteinReader extends ProteinReader
             start = line.indexOf(QUOTE);
             stop = line.indexOf(QUOTE, start+1);
          }
+         br.close();
          
       } 
       catch(FileNotFoundException fnfe)
       {
-         fnfe.printStackTrace();
+         throw new RuntimeException("Error reading protein. Could not find file.");
       }
       catch(IOException ioe)
       {
-         ioe.printStackTrace();
+         throw new RuntimeException("Could not read protein from file.");
       }
       return protein;
    }

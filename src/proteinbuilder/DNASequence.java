@@ -51,4 +51,30 @@ public class DNASequence
       }
       return list; 
    }
+   
+   /**
+   * Returns the amino acid sequence coded by this
+   * DNASequence
+   */
+   public LinkedList<AminoAcid> getAminoAcids()
+   {
+      LinkedList<Codon> codons = getCodonSequence();
+      LinkedList<AminoAcid> acids = new LinkedList();
+      for(Codon c : codons)
+      {
+         acids.add(c.getAminoAcid());
+      }
+      return acids;
+   }
+   
+   public Protein getProtein()
+   {
+      LinkedList<AminoAcid> acids = getAminoAcids();
+      Protein protein = new Protein();
+      for(AminoAcid aa : acids)
+      {
+         protein.add(aa);
+      }
+      return protein;
+   }
 }

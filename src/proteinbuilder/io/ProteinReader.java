@@ -11,6 +11,7 @@ public abstract class ProteinReader
    /**
    * Parses the given file and returns a protein
    * based on the contents of the file
+   * @throws RuntimeException if file could not be read
    */
    public abstract Protein getProteinFromFile(File f);
 }

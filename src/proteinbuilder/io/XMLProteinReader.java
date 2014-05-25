@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.RuntimeException;
 import proteinbuilder.Protein;
 import proteinbuilder.AminoAcid;
 
@@ -14,9 +15,10 @@ public class XMLProteinReader extends ProteinReader
    public Protein getProteinFromFile(File f)
    {
       Protein protein = new Protein();
+      BufferedReader br;
       try
       {
-         BufferedReader br = new BufferedReader(new FileReader(f));
+         br = new BufferedReader(new FileReader(f));
          String line = null;
          try
          {
@@ -41,15 +43,16 @@ public class XMLProteinReader extends ProteinReader
                   protein.add(AminoAcid.getAminoAcidByName(line.substring(start+1, stop)));
                }
             }
+            br.close();
          }
          catch(IOException ioe)
          {
-            ioe.printStackTrace();
+            throw new RuntimeException("Error reading protein from file.");
          }
       }
       catch(FileNotFoundException fnfe)
       {
-         fnfe.printStackTrace();
+         throw new RuntimeException("Error reading protein from file. Could not find file.");
       }
       return protein;
    }

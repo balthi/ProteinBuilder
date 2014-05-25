@@ -13,7 +13,7 @@ import static proteinbuilder.config.SessionConfig.NL;
 
 public class PTProteinWriter_Test extends IO_Test
 {
-   private static final String EXPECTED = "test:GLYCINE:LEUCINE:";
+   private static final String EXPECTED = "test:GLYCINE (G):LEUCINE (L):";
             
    
    public void setUp()

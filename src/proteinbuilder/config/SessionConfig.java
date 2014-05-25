@@ -7,8 +7,11 @@ import java.io.FileInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.RuntimeException;
 import java.net.URI;
+import java.util.NoSuchElementException;
 import java.util.Properties;
+import java.util.Scanner;
 
 import proteinbuilder.ProteinList;
 import proteinbuilder.io.ProteinReader;
@@ -23,6 +26,7 @@ public class SessionConfig
    public static final String PLAIN = "txt";
    public static final String DNA_SEQ = "[acgtACGT]+";
    public static final String DNA_CHARS = "[acgtACGT]";
+   public static final String DELIMITER = ":";
    
    //Session Properties
    public static String FORMAT;
@@ -35,6 +39,7 @@ public class SessionConfig
    private Properties properties = new Properties();
    private String FORMAT_KEY = "format";
    private static final String PROTEIN_FILE_DIRECTORY_KEY = "directory";
+   private static final String PROTEIN_LIST = "proteins";
    
    
    private static SessionConfig sc;
@@ -72,9 +77,11 @@ public class SessionConfig
       {
          setFormat();
          createProteinDirectory();
+         createProteinList();
          storeProperties();
       }
       FORMAT = properties.getProperty(FORMAT_KEY);
+      PROTEIN_LIST_URI = loadProteinList();
       loaded = true;
       
    }
@@ -84,7 +91,7 @@ public class SessionConfig
    */
    private void setFormat()
    {
-      properties.setProperty(FORMAT_KEY, PLAIN);
+      properties.setProperty(FORMAT_KEY, JSON);
    }
    
    /*
@@ -99,21 +106,56 @@ public class SessionConfig
    }
    
    /*
+   * Creates a file to store the list of proteins
+   */
+   private void createProteinList()
+   {
+      File f = new File(PROTEIN_FILE_DIRECTORY + PROTEIN_LIST);
+      try
+      {
+         f.createNewFile();
+      }
+      catch(IOException ioe)
+      {
+         throw new RuntimeException("Error creating protein list.");
+      }
+   }
+   
+   private URI loadProteinList()
+   {
+      File f = new File(PROTEIN_FILE_DIRECTORY + PROTEIN_LIST);
+      return f.toURI();
+   }
+   
+   /*
    * Read all files in proteins directory, create a protein
    * from each and add it to the PROTEIN_SET
    */
    public ProteinList getProteinsFromFiles()
    {
-      ProteinList pl = new ProteinList();
-      ProteinReader pr;
-      File f = new File(PROTEIN_FILE_DIRECTORY);
-      File[] proteins = f.listFiles();
-      for(int i=0; i < proteins.length; i++)
+      ProteinList proteinList = new ProteinList();
+      File proteins = new File(PROTEIN_LIST_URI);
+      File nextProtein;
+      String nextProteinFile;
+      Scanner proteinsIn;
+      boolean all = false;
+      try
       {
-         pr = ProteinReaderFactory.getReader(proteins[i]);
-         pl.add(pr.getProteinFromFile(proteins[i]));
+         proteinsIn = new Scanner(proteins);
+         proteinsIn.useDelimiter(DELIMITER);
+         while(proteinsIn.hasNext())
+         {
+            nextProteinFile = proteinsIn.next();
+            nextProtein = new File(PROTEIN_FILE_DIRECTORY + nextProteinFile);
+            proteinList.add(ProteinReaderFactory.getReader(nextProtein).getProteinFromFile(nextProtein));
+         }
+         proteinsIn.close();
       }
-      return pl;
+      catch(IOException ioe)
+      {
+         throw new RuntimeException("Error loading proteins from files.");
+      }
+      return proteinList;
    }
    
    /*
@@ -132,12 +174,12 @@ public class SessionConfig
          }
          catch(IOException ioe)
          {
-            ioe.printStackTrace();
+            throw new RuntimeException("Error storing properties to file.");
          }
       }
       catch(FileNotFoundException fnfe)
       {
-         fnfe.printStackTrace();
+         throw new RuntimeException("Error storing properties to file.");
       }
    }
 }

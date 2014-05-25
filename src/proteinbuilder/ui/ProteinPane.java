@@ -6,6 +6,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -14,10 +15,10 @@ public class ProteinPane extends JPanel
 {  
    private JLabel pName;
    private JTextField name;
-   private JList proteins, acidList;
-   private JTextArea acidDisplay, DNA;
-   private JButton save, undo, rTrans, lTrans;
-   private PBMediator mediator;
+   private JList singleSelection, multipleSelection;
+   private JTextArea displayOnly, editable;
+   private JButton save, undo, tRight, tLeft;
+   private Mediator mediator;
    
    private static final int WIDTH = 300;
    private static final int HEIGHT = 150;
@@ -26,7 +27,7 @@ public class ProteinPane extends JPanel
    
    public ProteinPane()
    {
-      mediator = PBMediator.getPBMediator();
+      mediator = MediatorFactory.getMediator();
       
       //Create elements for the pane
       pName = new JLabel(NAME);
@@ -34,27 +35,27 @@ public class ProteinPane extends JPanel
       name = mediator.getNameField();
       name.setMaximumSize(new Dimension(WIDTH, SHORT));
       
-      acidDisplay = mediator.getAcids();
-      acidDisplay.setMinimumSize(new Dimension(WIDTH, HEIGHT));
-      acidDisplay.setLineWrap(true);
+      displayOnly = mediator.getDisplayOnly();
+      displayOnly.setMinimumSize(new Dimension(WIDTH, HEIGHT));
+      displayOnly.setLineWrap(true);
       
-      proteins = mediator.getProteins();
-      proteins.setMinimumSize(new Dimension(WIDTH, HEIGHT-50));
+      singleSelection = mediator.getSingleSelection();
+      singleSelection.setMinimumSize(new Dimension(WIDTH, HEIGHT-50));
       
-      acidList = mediator.getAcidList();
-      acidList.setMinimumSize(new Dimension(HEIGHT, WIDTH));
+      multipleSelection = mediator.getMultipleSelection();
+      multipleSelection.setMinimumSize(new Dimension(HEIGHT, WIDTH));
       
-      DNA = mediator.getDNA();
-      DNA.setRows(150);
-      DNA.setColumns(300);
-      DNA.setLineWrap(true);
+      editable = mediator.getEditable();
+      editable.setRows(150);
+      editable.setColumns(300);
+      editable.setLineWrap(true);
       
       save = mediator.getSaveButton();
       save.setMinimumSize(new Dimension(WIDTH/2, 25));
       undo = mediator.getUndoButton();
       undo.setMinimumSize(new Dimension(WIDTH/2, 25));
-      rTrans = mediator.getRightTransferButton();
-      lTrans = mediator.getLeftTransferButton();
+      tRight = mediator.getRightTransferButton();
+      tLeft = mediator.getLeftTransferButton();
       
       //Create layout
       GroupLayout layout = new GroupLayout(this);
@@ -66,19 +67,19 @@ public class ProteinPane extends JPanel
       * its own row and the buttons go at the bottom.
       */
       layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
-         .addComponent(acidList)
+         .addComponent(multipleSelection)
          .addGroup(layout.createSequentialGroup()
             .addComponent(pName)
             .addComponent(name)
-            .addComponent(acidDisplay)
+            .addComponent(displayOnly)
             .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                .addComponent(save)
                .addComponent(undo))
-            .addComponent(proteins))
+            .addComponent(singleSelection))
          .addGroup(layout.createSequentialGroup()
-            .addComponent(rTrans)
-            .addComponent(lTrans))
-         .addComponent(DNA)
+            .addComponent(tRight)
+            .addComponent(tLeft))
+         .addComponent(editable)
          );
          
       /*Create horizontal layout. There are two columns, one for 
@@ -86,19 +87,19 @@ public class ProteinPane extends JPanel
       * fields. One button goes at the bottom of each column
       */
       layout.setHorizontalGroup(layout.createSequentialGroup()
-         .addComponent(acidList)
+         .addComponent(multipleSelection)
          .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addComponent(pName)
             .addComponent(name)
-            .addComponent(acidDisplay)
+            .addComponent(displayOnly)
             .addGroup(layout.createSequentialGroup()
                .addComponent(save)
                .addComponent(undo))
-            .addComponent(proteins))
+            .addComponent(singleSelection))
          .addGroup(layout.createParallelGroup()
-            .addComponent(rTrans)
-            .addComponent(lTrans))
-         .addComponent(DNA)
+            .addComponent(tRight)
+            .addComponent(tLeft))
+         .addComponent(editable)
          );
    }
 }

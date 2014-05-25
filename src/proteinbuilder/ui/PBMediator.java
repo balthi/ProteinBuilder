@@ -3,188 +3,71 @@ package proteinbuilder.ui;
 import java.util.List;
 import java.lang.NullPointerException;
 import javax.swing.DefaultListModel;
-import javax.swing.JButton;
 import javax.swing.JList;
-import javax.swing.JLabel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import proteinbuilder.AminoAcid;
+import proteinbuilder.DNASequence;
 import proteinbuilder.Protein;
 import proteinbuilder.ProteinList;
 import proteinbuilder.config.SessionConfig;
 import proteinbuilder.ui.buttonlistener.ButtonListenerFactory;
 import proteinbuilder.ui.listlistener.ListListenerFactory;
 
+import static proteinbuilder.config.SessionConfig.DNA_SEQ;
+
 public class PBMediator extends Mediator implements ProteinMediator
 {
    private static final String DELIMITER = ":";
+   private static final String AMINO_ACID = "AminoAcid";
+   private static final String PROTEIN = "Protein";
    
-   private JList<AminoAcid> acidList;
-   private JList<Protein> proteins;
-   private JTextArea acids, DNA;
-   private JButton save, undo, tRight, tLeft;
-   private JTextField name;
-   private ProteinList proteinList;
-   private Protein displayProtein;
-   private DefaultListModel<AminoAcid> aaList = new DefaultListModel();
+   private DefaultListModel<Protein> proteinList;
+   private Protein displayProtein = new Protein();
    private SessionConfig sc = SessionConfig.getSessionConfig();
-   private static PBMediator pb;
    
-   private PBMediator()
+   //From Mediator
+   @Override
+   protected void setUpSingleSelection()
    {
-      displayProtein = new Protein();
-      
-      //Set up AminoAcid and Protein ListModels
-      List<AminoAcid> list = AminoAcid.getAllAminoAcids();
-      for(AminoAcid aa : list)
+      SessionConfig sc = SessionConfig.getSessionConfig();
+      ProteinList pList = sc.getProteinsFromFiles();
+      proteinList = new DefaultListModel<Protein>();
+      for(Protein p : pList)
       {
-         aaList.addElement(aa);
+         proteinList.addElement(p);
       }
-      proteinList = sc.getProteinsFromFiles();
-            
-      //Set up display areas
-      acidList = new JList(aaList);
-      acidList.addListSelectionListener(ListListenerFactory.getListListener(this, acidList));
-      
-      proteins = new JList(proteinList);
-      proteins.addListSelectionListener(ListListenerFactory.getListListener(this, proteins));
-      
-      acids = new JTextArea();
-      acids.setEditable(false);
-      
-      DNA = new JTextArea();
-      DNA.setEditable(true);
-      
-      
-      //Set up observables and objects that communicate
-      //to the mediator
-      name = new JTextField();
-      save = new JButton(SAVE);
-      save.addActionListener(ButtonListenerFactory.getButtonListener(this, save));
-      undo = new JButton(UNDO);
-      undo.addActionListener(ButtonListenerFactory.getButtonListener(this, undo));
-      tRight = new JButton(TRANSFER_RIGHT);
-      tRight.addActionListener(ButtonListenerFactory.getButtonListener(this, tRight));
-      tLeft = new JButton(TRANSFER_LEFT);
-      tLeft.addActionListener(ButtonListenerFactory.getButtonListener(this, tLeft));
+      singleSelection = new JList<Protein>(proteinList);
+      singleSelection.addListSelectionListener(ListListenerFactory.getListListener(this, PROTEIN));
    }
    
-   /**
-   * Returns a reference to this PBMediator
-   */
-   public static PBMediator getPBMediator()
+   //From Mediator
+   @Override
+   protected void setUpMultipleSelection()
    {
-      if(pb == null)
+      List<AminoAcid> aaList = AminoAcid.getAllAminoAcids();
+      DefaultListModel<AminoAcid> dlm = new DefaultListModel<AminoAcid>();
+      for(AminoAcid aa : aaList)
       {
-         pb = new PBMediator();
+         dlm.addElement(aa);
       }
-      return pb;
+      multipleSelection = new JList<AminoAcid>(dlm);
+      multipleSelection.addListSelectionListener(ListListenerFactory.getListListener(this, AMINO_ACID));
    }
    
-   /**
-   * Returns the JComboBox in which the protein acid
-   * list is displayed
-   */
-   public JList getAcidList()
-   {
-      return acidList;
-   }
-   
-   /**
-   * Returns the JComboBox in which the complete list of 
-   * amino acids is displayed.
-   */
-   public JTextArea getAcids()
-   {
-      return acids;
-   }
-   
-   /**
-   * Returns the JTextArea that displays the DNA string
-   */
-   public JTextArea getDNA()
-   {
-      return DNA;
-   }
-   
-   /**
-   * Returns the JComboBox in which the list of 
-   * saved proteins is displayed.
-   */
-   public JList getProteins()
-   {
-      return proteins;
-   }
-   
-   /**
-   * Returns the JTextField in which the protein's
-   * name is entered.
-   */
-   public JTextField getNameField()
-   {
-      return name;
-   }
-   
-   /**
-   * Returns the JButton with an arrow pointed
-   * to the left.
-   */
-   public JButton getLeftTransferButton()
-   {
-      return tLeft;
-   }
-   
-   /**
-   * Returns the JButton with an arrow pointed to
-   * the right
-   */
-   public JButton getRightTransferButton()
-   {
-      return tRight;
-   }
-   
-   /**
-   * Returns the JButton with save printed on it
-   */
-   public JButton getSaveButton()
-   {
-      return save;
-   }
-   
-   /**
-   * Returns the JButton with undo printed on it
-   */
-   public JButton getUndoButton()
-   {
-      return undo;
-   }
-   
-   /**
-   * Clears all amino acids from the display pane
-   */
-   public void clearAminoAcids()
-   {
-      displayProtein.clear();
-      setAcidsText();
-   }
-   
-   /*
-   * Set the text for the acids display field
-   */
-   private void setAcidsText()
+   //From Mediator
+   @Override
+   protected void setDisplayOnlyText()
    {
       String text = "";
       for(AminoAcid aa : displayProtein)
       {
          text = text + aa.toString() + DELIMITER;
       }
-      acids.setText(text);
+      displayOnly.setText(text);
    }
    
-   /*
-   * Sets the value of the name field to displayProtein's name
-   */
-   private void setNameField()
+   //From Mediator
+   @Override
+   protected void setNameField()
    {  
       try
       {
@@ -195,16 +78,102 @@ public class PBMediator extends Mediator implements ProteinMediator
          name.setText(null);
       }
    }
-
    
-   /*
-   * The following two methods are from the 
-   * ProteinMediator interface
-   */
+   //From Mediator
+   @Override
+   public void ok()
+   {
+   }
+   
+   //From Mediator
+   @Override
+   public void cancel()
+   {
+   }
+   
+   //From Mediator
+   @Override
+   public void save()
+   {
+      try
+      {
+         displayProtein.getName();
+         System.err.println("displayProtein has a name");
+      }
+      catch(NullPointerException npe)
+      {
+         if(name.getText().equals(null) || name.getText().equals(""))
+         {
+            System.err.println("Please enter a name for the protein.");
+         }
+         else
+         {
+            displayProtein.setName(name.getText());
+            displayProtein.writeToFile();
+            proteinList.addElement(displayProtein.clone());
+            displayProtein.setName(null);
+            displayProtein.clear();
+            setNameField();
+            setDisplayOnlyText();
+         }
+      }
+   }
+   
+   //From Mediator
+   @Override
+   public void undo()
+   {
+      if(displayProtein.size() > 0)
+      {
+         displayProtein.pop();
+         setDisplayOnlyText();
+      }
+   }
+   
+   //From Mediator   
+   @Override
+   public void transferLeft()
+   {
+      String text = editable.getText();
+      if(!text.matches(DNA_SEQ))
+      {
+         System.err.println("Invalid character found.");
+         return;
+      }
+      else
+      {
+         DNASequence dna = new DNASequence(text);
+         Protein newProtein = dna.getProtein();
+         displayProtein.setName(null);
+         displayProtein.clear();
+         for(AminoAcid aa : newProtein)
+         {
+            displayProtein.add(aa);
+            System.err.println("Adding " + aa.toString() + " to displayProtein.");
+         }
+         setNameField();
+         setDisplayOnlyText();
+      }
+   }
+   
+   //From Mediator
+   @Override
+   public void transferRight()
+   {
+      String text = "";
+      for(AminoAcid aa : displayProtein)
+      {
+         text = text + aa.getCodons().get(0).toString();
+      }
+      editable.setText(text);
+   }  
+   
+   //From ProteinMediator
    @Override
    public void listItemSelected(AminoAcid selected)
    {
       //TODO: rework so that the same amino acid can be selected twice
+      //TODO: rework so that try/catch is not controlling program flow
       try
       {
          displayProtein.getName();
@@ -219,10 +188,11 @@ public class PBMediator extends Mediator implements ProteinMediator
       finally
       {
          displayProtein.add(selected);
-         setAcidsText();
+         setDisplayOnlyText();
       }
    }
 
+   //From ProteinMediator
    @Override   
    public void listItemSelected(Protein selected)
    {
@@ -233,86 +203,6 @@ public class PBMediator extends Mediator implements ProteinMediator
          displayProtein.add(aa);
       }
       setNameField();
-      setAcidsText();
-   }
-   
-   /*
-   * The following four methods are implementations
-   * of those found in the Mediator interface
-   */
-   
-   @Override
-   public void ok()
-   {
-   }
-   
-   @Override
-   public void cancel()
-   {
-   }
-   
-   @Override
-   public void save()
-   {
-      try
-      {
-         displayProtein.getName();
-         System.err.println("displayProtein has a name");
-      }
-      catch(NullPointerException npe)
-      {
-         //TODO: make this work. It currently saves nameless proteins
-         try
-         {
-            displayProtein.setName(name.getText());
-            System.err.println("Name set to " + name.getText());
-            System.err.println("displayProtein name set to " + name.getText());
-            displayProtein.writeToFile();
-            System.err.println("displayProtein written to file.");
-            proteinList.add(displayProtein);
-            System.err.println("displayProtein added to list.");
-            displayProtein.setName(null);
-            System.err.println("displayProtein name reset.");
-            displayProtein.clear();
-            System.err.println("displayProtein cleared.");
-            setNameField();
-            setAcidsText();
-         }
-         catch(NullPointerException ne)
-         {
-            System.err.println("Please enter a name for this protein.");
-         }
-      }
-   }
-   
-   @Override
-   public void undo()
-   {
-      if(displayProtein.size() > 0)
-      {
-         displayProtein.pop();
-         setAcidsText();
-      }
-   }
-   
-   /*
-   * The following two methods are from the TransferMediator
-   * interface
-   */
-   
-   @Override
-   public void transferLeft()
-   {
-   }
-   
-   @Override
-   public void transferRight()
-   {
-      String text = "";
-      for(AminoAcid aa : displayProtein)
-      {
-         text = text + aa.getCodons().get(0).toString();
-      }
-      DNA.setText(text);
-   }   
+      setDisplayOnlyText();
+   } 
 }

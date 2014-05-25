@@ -11,7 +11,7 @@ import java.lang.Iterable;
 /**
 * Maintains a list of proteins. Does not allow duplicate entries
 */
-public class ProteinList implements Iterable<Protein>, ListModel<Protein>
+public class ProteinList implements Iterable<Protein>
 {
    public ProteinList()
    {
@@ -29,7 +29,8 @@ public class ProteinList implements Iterable<Protein>, ListModel<Protein>
    public boolean add(Protein protein)
    {
       if(list.contains(protein))
-      {
+      {  
+         System.err.println("Protein " + protein.toString() + " already in list.");
          return false;
       }
       for(ListDataListener listener : listeners)
@@ -78,34 +79,5 @@ public class ProteinList implements Iterable<Protein>, ListModel<Protein>
    public int size()
    {
       return list.size();
-   }
-   
-   /*
-   * The following methods are all part of the 
-   * ListModel<E> interface
-   */
-   
-   @Override
-   public int getSize()
-   {
-      return list.size();
-   }
-   
-   @Override
-   public Protein getElementAt(int index)
-   {
-      return list.get(index);
-   }
-   
-   @Override
-   public void addListDataListener(ListDataListener l)
-   {
-      listeners.add(l);
-   }
-   
-   @Override
-   public void removeListDataListener(ListDataListener l)
-   {
-      listeners.remove(l);
    }
 }

@@ -3,6 +3,7 @@ package proteinbuilder.io;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.RuntimeException;
 import java.net.URI;
 import proteinbuilder.AminoAcid;
 import proteinbuilder.Protein;
@@ -10,6 +11,7 @@ import proteinbuilder.Protein;
 import static proteinbuilder.config.SessionConfig.PROTEIN_FILE_DIRECTORY;
 import static proteinbuilder.config.SessionConfig.PROTEIN_LIST_URI;
 import static proteinbuilder.config.SessionConfig.FORMAT;
+import static proteinbuilder.config.SessionConfig.DELIMITER;
 
 public abstract class ProteinWriter
 {
@@ -44,7 +46,21 @@ public abstract class ProteinWriter
       }
       catch(IOException ioe)
       {
-         ioe.printStackTrace();
+         throw new RuntimeException("Could not write protein to file.");
+      }
+      
+      if(!name.equals("test"))
+         {
+         try
+         {
+            FileWriter fr = new FileWriter(new File(PROTEIN_LIST_URI), true);
+            fr.write(name + EXTENSION + DELIMITER);
+            fr.close();
+         }
+         catch(IOException io)
+         {
+            throw new RuntimeException("Could not write protein to protein list file.");
+         }
       }
    }
 }

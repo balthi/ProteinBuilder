@@ -6,23 +6,19 @@ import javax.swing.JList;
 
 public class ListListenerFactory
 {  
-   private static final String AMINO_ACID = "proteinbuilder.AminoAcid";
-   private static final String PROTEIN = "proteinbuilder.Protein";
+   private static final String AMINO_ACID = "AminoAcid";
+   private static final String PROTEIN = "Protein";
    
-   public static ListSelectionListener getListListener(ProteinMediator pm, JList list)
+   public static ListSelectionListener getListListener(ProteinMediator pm, String elementType)
    {
-      Class <?> type = list.getModel().getElementAt(0).getClass();
-      if(type.getName().equals(AMINO_ACID))
+      switch (elementType)
       {
-         return new AAListener(pm);
-      }
-      else if(type.getName().equals(PROTEIN))
-      {
-         return new ProteinListener(pm);
-      }
-      else
-      {
-         throw new IllegalArgumentException("No listener found for list.");
+         case AMINO_ACID:
+               return new AAListener(pm);
+         case PROTEIN:
+            return new ProteinListener(pm);
+         default:
+            throw new IllegalArgumentException("No listener found for list.");
       }
    }
 }

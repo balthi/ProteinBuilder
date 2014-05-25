@@ -20,6 +20,8 @@ public class Protein implements Comparable<Protein>, Iterable<AminoAcid>
       acids = new LinkedList();
    }
    
+   private static final String DEFAULT = "Default protein";
+   
    private String name;
    private LinkedList<AminoAcid> acids;
    
@@ -61,13 +63,27 @@ public class Protein implements Comparable<Protein>, Iterable<AminoAcid>
    }
    
    @Override
+   public Protein clone()
+   {
+      Protein protein = new Protein();
+      protein.setName(name);
+      for(AminoAcid aa : this)
+      {
+         protein.add(aa);
+      }
+      return protein;
+   }
+   
+   @Override
    public int hashCode()
    {
-      int prime = 7;
+      int n = 3;
+      int prime = 31;
       int product = prime * name.hashCode();
       for(AminoAcid aa : this)
       {
-         product *= prime*aa.hashCode();
+         product += aa.hashCode()*n;
+         n += 2;
       }
       return product;
    }
@@ -114,6 +130,10 @@ public class Protein implements Comparable<Protein>, Iterable<AminoAcid>
    @Override
    public String toString()
    {
+      if(name == null)
+      {
+         return DEFAULT;
+      }
       return name;
    }
    

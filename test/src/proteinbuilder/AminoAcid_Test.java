@@ -5,12 +5,12 @@ import junit.framework.TestCase;
 
 public class AminoAcid_Test extends TestCase
 {
-   public static final String GLY="GLYCINE";
+   public static final String GLY="GLYCINE (G)";
    public static final int NUM_AMINO_ACIDS = 21;
    
    public void testGetName()
    {
-      assertEquals("Names do not match in testGetName.", "GLYCINE", AminoAcid.GLYCINE.getName());
+      assertEquals("Names do not match in testGetName.", GLY, AminoAcid.GLYCINE.getName());
    }
    
    public void testGetAminoAcidByName()

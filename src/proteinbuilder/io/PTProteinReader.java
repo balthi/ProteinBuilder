@@ -13,19 +13,21 @@ public class PTProteinReader extends ProteinReader
    public Protein getProteinFromFile(File f)
    {
       Protein protein = new Protein();
+      Scanner in;
       try
       {
-         Scanner in = new Scanner(f);
+         in = new Scanner(f);
          in.useDelimiter(DELIMITER);
          protein.setName(in.next());
          while(in.hasNext())
          {
             protein.add(AminoAcid.getAminoAcidByName(in.next()));
-         }  
+         }
+         in.close();  
       } 
       catch(FileNotFoundException fnfe)
       {
-         fnfe.printStackTrace();
+         throw new RuntimeException("Error reading protein from file.");
       }
       return protein;
    }

@@ -30,7 +30,6 @@ public enum Codon
    
    private AminoAcid aminoAcid;
    private String name;
-   private static final int CODON_LENGTH = 3;
    private static final EnumSet<Codon> ALL_CODONS = EnumSet.allOf(Codon.class);
    
    /**

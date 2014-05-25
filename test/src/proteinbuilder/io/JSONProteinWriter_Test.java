@@ -12,7 +12,7 @@ import static proteinbuilder.config.SessionConfig.PROTEIN_FILE_DIRECTORY;
 
 public class JSONProteinWriter_Test extends IO_Test
 {
-   private static final String EXPECTED = "{\"protein\":\"test\",\"acids\":[\"GLYCINE\",\"LEUCINE\"]}";
+   private static final String EXPECTED = "{\"protein\":\"test\",\"acids\":[\"GLYCINE (G)\",\"LEUCINE (L)\"]}";
    
    public void setUp()
    {

@@ -15,8 +15,8 @@ public class XMLProteinWriter_Test extends IO_Test
 {
    private static final String EXPECTED = "<protein>" + NL
                                           + "<name Id=\"test\"/>" + NL
-                                          + "<acid Id=\"GLYCINE\"/>" + NL
-                                          + "<acid Id=\"LEUCINE\"/>" + NL
+                                          + "<acid Id=\"GLYCINE (G)\"/>" + NL
+                                          + "<acid Id=\"LEUCINE (L)\"/>" + NL
                                           + "</protein>";
             
    
