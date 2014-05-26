@@ -7,11 +7,12 @@ import java.util.Iterator;
 import proteinbuilder.io.ProteinWriter;
 import proteinbuilder.io.ProteinWriterFactory;
 
-public class Protein implements Comparable<Protein>, Iterable<AminoAcid>
+public final class Protein implements Comparable<Protein>, Iterable<AminoAcid>
 {
    public Protein()
    {
       acids = new LinkedList();
+      name = DEFAULT_PROTEIN_NAME;
    }
    
    public Protein(String name)
@@ -20,7 +21,8 @@ public class Protein implements Comparable<Protein>, Iterable<AminoAcid>
       acids = new LinkedList();
    }
    
-   private static final String DEFAULT = "Default protein";
+   public static final String DEFAULT_PROTEIN_NAME = "Default protein";
+   private static final String NAME_ALLOWED_CHARS = "[a-zA-Z0-9 _'-]+";
    
    private String name;
    private LinkedList<AminoAcid> acids;
@@ -41,6 +43,11 @@ public class Protein implements Comparable<Protein>, Iterable<AminoAcid>
       acids.clear();
    }
    
+   public boolean contains(AminoAcid aa)
+   {
+      return acids.contains(aa);
+   }
+   
    /**
    * Compares this protein to p
    */
@@ -55,10 +62,6 @@ public class Protein implements Comparable<Protein>, Iterable<AminoAcid>
    */
    public String getName()
    {
-      if(name == null)
-      {
-         throw new NullPointerException("Protein has no name");
-      }
       return name;
    }
    
@@ -112,10 +115,22 @@ public class Protein implements Comparable<Protein>, Iterable<AminoAcid>
    }
    
    /**
+   * Resets the name of this protein to the default protein name
+   */
+   public void resetProteinName()
+   {
+      name = DEFAULT_PROTEIN_NAME;
+   }
+   
+   /**
    * Sets the name of this protein
    */
    public void setName(String name)
    {
+      if(name == null || !name.matches(NAME_ALLOWED_CHARS))
+      {
+         throw new IllegalArgumentException("Name cannot be null and must contain only letters, numbers and the characters ', -, and _");
+      }
       this.name = name;
    }
    
@@ -130,10 +145,6 @@ public class Protein implements Comparable<Protein>, Iterable<AminoAcid>
    @Override
    public String toString()
    {
-      if(name == null)
-      {
-         return DEFAULT;
-      }
       return name;
    }
    

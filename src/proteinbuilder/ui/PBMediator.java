@@ -13,16 +13,19 @@ import proteinbuilder.ui.buttonlistener.ButtonListenerFactory;
 import proteinbuilder.ui.listlistener.ListListenerFactory;
 
 import static proteinbuilder.config.SessionConfig.DNA_SEQ;
+import static proteinbuilder.Protein.DEFAULT_PROTEIN_NAME;
 
-public class PBMediator extends Mediator implements ProteinMediator
+public final class PBMediator extends Mediator implements ProteinMediator
 {
    private static final String DELIMITER = ":";
    private static final String AMINO_ACID = "AminoAcid";
    private static final String PROTEIN = "Protein";
+   private static final String EMPTY_STRING = "";
    
    private DefaultListModel<Protein> proteinList;
    private Protein displayProtein = new Protein();
    private SessionConfig sc = SessionConfig.getSessionConfig();
+   private ErrorFrame errorFrame;
    
    //From Mediator
    @Override
@@ -68,15 +71,13 @@ public class PBMediator extends Mediator implements ProteinMediator
    //From Mediator
    @Override
    protected void setNameField()
-   {  
-      try
-      {
-         name.setText(displayProtein.getName());
-      }
-      catch(NullPointerException npe)
-      {
-         name.setText(null);
-      }
+   {
+      name.setText(displayProtein.getName());
+   }
+   
+   private void setNameField(String s)
+   {
+      name.setText(s);
    }
    
    //From Mediator
@@ -95,27 +96,28 @@ public class PBMediator extends Mediator implements ProteinMediator
    @Override
    public void save()
    {
-      try
+      if(displayProtein.getName().equals(DEFAULT_PROTEIN_NAME))
       {
-         displayProtein.getName();
-         System.err.println("displayProtein has a name");
-      }
-      catch(NullPointerException npe)
-      {
-         if(name.getText().equals(null) || name.getText().equals(""))
-         {
-            System.err.println("Please enter a name for the protein.");
-         }
-         else
+         try
          {
             displayProtein.setName(name.getText());
             displayProtein.writeToFile();
             proteinList.addElement(displayProtein.clone());
-            displayProtein.setName(null);
+            displayProtein.resetProteinName();
             displayProtein.clear();
-            setNameField();
+            setNameField(EMPTY_STRING);
             setDisplayOnlyText();
          }
+         catch(IllegalArgumentException ile)
+         {
+            errorFrame = new ErrorFrame(ile.getMessage());
+            errorFrame.createAndShowFrame();
+         }
+      }
+      else
+      {
+         errorFrame = new ErrorFrame("Protein already saved.");
+         errorFrame.createAndShowFrame();
       }
    }
    
@@ -137,22 +139,22 @@ public class PBMediator extends Mediator implements ProteinMediator
       String text = editable.getText();
       if(!text.matches(DNA_SEQ))
       {
-         System.err.println("Invalid character found.");
+         errorFrame = new ErrorFrame("Invalid character found.");
+         errorFrame.createAndShowFrame();
          return;
       }
       else
       {
          DNASequence dna = new DNASequence(text);
-         Protein newProtein = dna.getProtein();
-         displayProtein.setName(null);
+         List<AminoAcid> acids = dna.getAminoAcids();
+         displayProtein.resetProteinName();
          displayProtein.clear();
-         for(AminoAcid aa : newProtein)
+         for(AminoAcid ab : acids)
          {
-            displayProtein.add(aa);
-            System.err.println("Adding " + aa.toString() + " to displayProtein.");
+            System.err.println("AminoAcid is " + ab.toString());
+            listItemSelected(ab);
          }
-         setNameField();
-         setDisplayOnlyText();
+         setNameField(EMPTY_STRING);
       }
    }
    
@@ -173,23 +175,15 @@ public class PBMediator extends Mediator implements ProteinMediator
    public void listItemSelected(AminoAcid selected)
    {
       //TODO: rework so that the same amino acid can be selected twice
-      //TODO: rework so that try/catch is not controlling program flow
-      try
+      if(!displayProtein.getName().equals(DEFAULT_PROTEIN_NAME))
       {
-         displayProtein.getName();
-         displayProtein.setName(null);
+         displayProtein.resetProteinName();
          displayProtein.clear();
-         setNameField();
+         setNameField(EMPTY_STRING);
       }
-      catch(NullPointerException npe)
-      {
-         System.err.println("No protein selected.");
-      }
-      finally
-      {
-         displayProtein.add(selected);
-         setDisplayOnlyText();
-      }
+      displayProtein.add(selected);
+      setDisplayOnlyText();
+      multipleSelection.clearSelection();
    }
 
    //From ProteinMediator

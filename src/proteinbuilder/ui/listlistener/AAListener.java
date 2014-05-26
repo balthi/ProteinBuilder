@@ -18,9 +18,9 @@ public class AAListener implements ListSelectionListener
    @Override
    public void valueChanged(ListSelectionEvent e)
    {
-      if(!e.getValueIsAdjusting())
+      JList source = (JList) e.getSource();
+      if(!e.getValueIsAdjusting() && !source.isSelectionEmpty())
       {
-         JList source = (JList) e.getSource();
          pm.listItemSelected((AminoAcid) source.getSelectedValue());
       }
    }

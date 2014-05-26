@@ -59,7 +59,7 @@ public abstract class Mediator
    * Returns the JList from which multiple selected items
    * can be displayed simulaneously.
    */
-   public JList getMultipleSelection()
+   public final JList getMultipleSelection()
    {
       return multipleSelection;
    }
@@ -67,7 +67,7 @@ public abstract class Mediator
    /**
    * Returns the display only text area
    */
-   public JTextArea getDisplayOnly()
+   public final JTextArea getDisplayOnly()
    {
       return displayOnly;
    }
@@ -75,7 +75,7 @@ public abstract class Mediator
    /**
    * Returns the JTextArea that displays editable text
    */
-   public JTextArea getEditable()
+   public final JTextArea getEditable()
    {
       return editable;
    }
@@ -84,7 +84,7 @@ public abstract class Mediator
    * Returns the JList from which only one element at a time
    * can be displayed
    */
-   public JList getSingleSelection()
+   public final JList getSingleSelection()
    {
       return singleSelection;
    }
@@ -92,7 +92,7 @@ public abstract class Mediator
    /**
    * Returns the JTextField.
    */
-   public JTextField getNameField()
+   public final JTextField getNameField()
    {
       return name;
    }
@@ -101,7 +101,7 @@ public abstract class Mediator
    * Returns the JButton with an arrow pointed
    * to the left.
    */
-   public JButton getLeftTransferButton()
+   public final JButton getLeftTransferButton()
    {
       return tLeft;
    }
@@ -110,7 +110,7 @@ public abstract class Mediator
    * Returns the JButton with an arrow pointed to
    * the right
    */
-   public JButton getRightTransferButton()
+   public final JButton getRightTransferButton()
    {
       return tRight;
    }
@@ -118,7 +118,7 @@ public abstract class Mediator
    /**
    * Returns the JButton with save printed on it
    */
-   public JButton getSaveButton()
+   public final JButton getSaveButton()
    {
       return save;
    }
@@ -126,7 +126,7 @@ public abstract class Mediator
    /**
    * Returns the JButton with undo printed on it
    */
-   public JButton getUndoButton()
+   public final JButton getUndoButton()
    {
       return undo;
    }

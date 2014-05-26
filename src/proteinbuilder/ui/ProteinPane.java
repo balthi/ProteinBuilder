@@ -18,6 +18,7 @@ public class ProteinPane extends JPanel
    private JList singleSelection, multipleSelection;
    private JTextArea displayOnly, editable;
    private JButton save, undo, tRight, tLeft;
+   private JScrollPane editableScrollPane, displayOnlyScrollPane, singleSelectionScrollPane;
    private Mediator mediator;
    
    private static final int WIDTH = 300;
@@ -36,16 +37,19 @@ public class ProteinPane extends JPanel
       name.setMaximumSize(new Dimension(WIDTH, SHORT));
       
       displayOnly = mediator.getDisplayOnly();
-      displayOnly.setMinimumSize(new Dimension(WIDTH, HEIGHT));
+      displayOnlyScrollPane = new JScrollPane(displayOnly);
+      displayOnlyScrollPane.setMinimumSize(new Dimension(WIDTH, HEIGHT));
       displayOnly.setLineWrap(true);
       
       singleSelection = mediator.getSingleSelection();
-      singleSelection.setMinimumSize(new Dimension(WIDTH, HEIGHT-50));
+      singleSelectionScrollPane = new JScrollPane(singleSelection);
+      singleSelectionScrollPane.setMinimumSize(new Dimension(WIDTH, HEIGHT-50));
       
       multipleSelection = mediator.getMultipleSelection();
       multipleSelection.setMinimumSize(new Dimension(HEIGHT, WIDTH));
       
       editable = mediator.getEditable();
+      editableScrollPane = new JScrollPane(editable);
       editable.setRows(150);
       editable.setColumns(300);
       editable.setLineWrap(true);
@@ -71,15 +75,15 @@ public class ProteinPane extends JPanel
          .addGroup(layout.createSequentialGroup()
             .addComponent(pName)
             .addComponent(name)
-            .addComponent(displayOnly)
+            .addComponent(displayOnlyScrollPane)
             .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                .addComponent(save)
                .addComponent(undo))
-            .addComponent(singleSelection))
+            .addComponent(singleSelectionScrollPane))
          .addGroup(layout.createSequentialGroup()
             .addComponent(tRight)
             .addComponent(tLeft))
-         .addComponent(editable)
+         .addComponent(editableScrollPane)
          );
          
       /*Create horizontal layout. There are two columns, one for 
@@ -91,15 +95,15 @@ public class ProteinPane extends JPanel
          .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addComponent(pName)
             .addComponent(name)
-            .addComponent(displayOnly)
+            .addComponent(displayOnlyScrollPane)
             .addGroup(layout.createSequentialGroup()
                .addComponent(save)
                .addComponent(undo))
-            .addComponent(singleSelection))
+            .addComponent(singleSelectionScrollPane))
          .addGroup(layout.createParallelGroup()
             .addComponent(tRight)
             .addComponent(tLeft))
-         .addComponent(editable)
+         .addComponent(editableScrollPane)
          );
    }
 }

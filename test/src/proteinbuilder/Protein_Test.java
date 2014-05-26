@@ -2,7 +2,7 @@ package proteinbuilder;
 
 import junit.framework.TestCase;
 
-public class Protein_Test extends TestCase
+public final class Protein_Test extends TestCase
 {
    private Protein protein;
    private static final String TEST = "test";

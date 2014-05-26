@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.LinkedList;
 import junit.framework.TestCase;
 
-public class DNASequence_Test extends TestCase
+public final class DNASequence_Test extends TestCase
 {
    private static final String NORMAL = "AACCGGTTA";
    private static final String ABNORMAL = "AACCGTGCAT";
@@ -44,6 +44,8 @@ public class DNASequence_Test extends TestCase
    public void testGetProtein()
    {
       Protein protein = dna1.getProtein();
-      assertEquals("Wrong size returned in testGetProtein", DNA_1_SIZE, protein.size());
+      assertTrue("ASPARAGINE not found in testGetProtein", protein.contains(AminoAcid.ASPARAGINE));
+      assertTrue("ARGININE not found in testGetProtein", protein.contains(AminoAcid.ARGININE));
+      assertTrue("LEUCINE not found in testGetProtein", protein.contains(AminoAcid.LEUCINE));
    }
 }

@@ -3,7 +3,7 @@ package proteinbuilder.ui;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 
-public class MainFrame
+public final class MainFrame
 {  
    private static MainFrame frame;
    private static String FRAME_TITLE = "Protein Builder";
