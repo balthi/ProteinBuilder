@@ -71,12 +71,4 @@ public final class PBMediator_Test extends TestCase
                                                                                                 GLY.toString() + ":" +
                                                                                                 LEU.toString() + ":"));
    }
-   
-   public void testListItemSelectedAminoAcid()
-   {
-   }
-   
-   public void testListItemSelectedProtein()
-   {
-   }
 }
