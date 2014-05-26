@@ -11,7 +11,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 
-public class ProteinPane extends JPanel
+public final class ProteinPane extends JPanel
 {  
    private JLabel pName;
    private JTextField name;

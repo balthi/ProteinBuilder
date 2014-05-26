@@ -4,7 +4,7 @@ import java.util.Iterator;
 import proteinbuilder.AminoAcid;
 import proteinbuilder.Protein;
 
-public class JSONProteinWriter extends ProteinWriter
+public final class JSONProteinWriter extends ProteinWriter
 {
    private static String PROTEIN = "{\"protein\":\"";
    private static String ACIDS = "\"acids\":[";

@@ -7,7 +7,7 @@ import static proteinbuilder.config.SessionConfig.JSON;
 import static proteinbuilder.config.SessionConfig.XML;
 import static proteinbuilder.config.SessionConfig.PLAIN;
 
-public class ProteinReaderFactory
+public final class ProteinReaderFactory
 {
    private static final String DOT = ".";
    

@@ -21,6 +21,8 @@ public final class PBMediator extends Mediator implements ProteinMediator
    private static final String AMINO_ACID = "AminoAcid";
    private static final String PROTEIN = "Protein";
    private static final String EMPTY_STRING = "";
+   private static final String PROTEIN_SAVED = "Protein already saved.";
+   private static final String ILLEGAL_CHARACTER = "DNA sequence may only contain the characters A, C, G, and T";
    
    private DefaultListModel<Protein> proteinList;
    private Protein displayProtein = new Protein();
@@ -60,7 +62,7 @@ public final class PBMediator extends Mediator implements ProteinMediator
    @Override
    protected void setDisplayOnlyText()
    {
-      String text = "";
+      String text = EMPTY_STRING;
       for(AminoAcid aa : displayProtein)
       {
          text = text + aa.toString() + DELIMITER;
@@ -116,7 +118,7 @@ public final class PBMediator extends Mediator implements ProteinMediator
       }
       else
       {
-         errorFrame = new ErrorFrame("Protein already saved.");
+         errorFrame = new ErrorFrame(PROTEIN_SAVED);
          errorFrame.createAndShowFrame();
       }
    }
@@ -136,25 +138,19 @@ public final class PBMediator extends Mediator implements ProteinMediator
    @Override
    public void transferLeft()
    {
-      String text = editable.getText();
-      if(!text.matches(DNA_SEQ))
+      String dnaText = editable.getText();
+      if(!dnaText.matches(DNA_SEQ))
       {
-         errorFrame = new ErrorFrame("Invalid character found.");
+         errorFrame = new ErrorFrame(ILLEGAL_CHARACTER);
          errorFrame.createAndShowFrame();
          return;
       }
       else
       {
-         DNASequence dna = new DNASequence(text);
-         List<AminoAcid> acids = dna.getAminoAcids();
-         displayProtein.resetProteinName();
-         displayProtein.clear();
-         for(AminoAcid ab : acids)
-         {
-            System.err.println("AminoAcid is " + ab.toString());
-            listItemSelected(ab);
-         }
+         DNASequence dna = new DNASequence(dnaText);
+         displayProtein = dna.getProtein();
          setNameField(EMPTY_STRING);
+         setDisplayOnlyText();
       }
    }
    

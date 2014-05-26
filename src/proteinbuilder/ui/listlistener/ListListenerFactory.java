@@ -4,7 +4,7 @@ import proteinbuilder.ui.ProteinMediator;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.JList;
 
-public class ListListenerFactory
+public final class ListListenerFactory
 {  
    private static final String AMINO_ACID = "AminoAcid";
    private static final String PROTEIN = "Protein";

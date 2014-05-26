@@ -10,7 +10,7 @@ import static proteinbuilder.ui.Mediator.UNDO;
 import static proteinbuilder.ui.Mediator.TRANSFER_RIGHT;
 import static proteinbuilder.ui.Mediator.TRANSFER_LEFT;
 
-public class ButtonListenerFactory
+public final class ButtonListenerFactory
 {
    
    public static ActionListener getButtonListener(Mediator pb, JButton button)

@@ -3,7 +3,7 @@ package proteinbuilder;
 import proteinbuilder.config.SessionConfig;
 import proteinbuilder.ui.MainFrame;
 
-public class Main
+public final class Main
 {
    public static void main(String[] args)
    {

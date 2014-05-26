@@ -129,7 +129,7 @@ public final class Protein implements Comparable<Protein>, Iterable<AminoAcid>
    {
       if(name == null || !name.matches(NAME_ALLOWED_CHARS))
       {
-         throw new IllegalArgumentException("Name cannot be null and must contain only letters, numbers and the characters ', -, and _");
+         throw new IllegalArgumentException("Name cannot be null and must contain only letters, numbers, spaces, and the characters ', -, and _");
       }
       this.name = name;
    }

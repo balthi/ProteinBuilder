@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import proteinbuilder.ui.Mediator;
 
-public class CancelListener implements ActionListener
+public final class CancelListener implements ActionListener
 {
    public CancelListener(Mediator mediator)
    {

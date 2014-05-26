@@ -7,7 +7,7 @@ import java.util.Scanner;
 import proteinbuilder.Protein;
 import proteinbuilder.AminoAcid;
 
-public class PTProteinReader extends ProteinReader
+public final class PTProteinReader extends ProteinReader
 {     
    @Override 
    public Protein getProteinFromFile(File f)

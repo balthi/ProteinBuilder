@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import proteinbuilder.ui.Mediator;
 
-public class OkListener implements ActionListener
+public final class OkListener implements ActionListener
 {
    public OkListener(Mediator mediator)
    {

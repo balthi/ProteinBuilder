@@ -6,7 +6,7 @@ import java.util.LinkedList;
 
 import static proteinbuilder.config.SessionConfig.DNA_SEQ;
 
-public class DNASequence
+public final class DNASequence
 {
    public DNASequence(String sequence)
    {

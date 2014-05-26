@@ -17,7 +17,7 @@ public abstract class ProteinWriter
 {
    private static final String EXTENSION = "." + FORMAT;
    
-   public void writeToFile(Protein protein)
+   public final void writeToFile(Protein protein)
    {
       String out = getString(protein);
       File f = new File(PROTEIN_FILE_DIRECTORY + protein.getName() + EXTENSION);
@@ -29,7 +29,7 @@ public abstract class ProteinWriter
       }
       catch(IOException ioe)
       {
-         ioe.printStackTrace();
+         throw new RuntimeException("Error creating file.");
       }
    }
    
@@ -41,8 +41,25 @@ public abstract class ProteinWriter
       try
       {
          FileWriter fw = new FileWriter(f);
-         fw.write(protein);
-         fw.close();
+         try
+         {
+            fw.write(protein);
+         }
+         catch(IOException i)
+         {
+            throw new RuntimeException("Error writing to file.");
+         }
+         finally
+         {
+            try
+            {
+               fw.close();
+            }
+            catch(IOException close)
+            {
+               throw new RuntimeException("Error writing to file.");
+            }
+         }
       }
       catch(IOException ioe)
       {
@@ -54,8 +71,25 @@ public abstract class ProteinWriter
          try
          {
             FileWriter fr = new FileWriter(new File(PROTEIN_LIST_URI), true);
-            fr.write(name + EXTENSION + DELIMITER);
-            fr.close();
+            try
+            {
+               fr.write(name + EXTENSION + DELIMITER);
+            }
+            catch(IOException write)
+            {
+               throw new RuntimeException("Error appending protein to list.");
+            }
+            finally
+            {
+               try
+               {
+                  fr.close();
+               }
+               catch(IOException close)
+               {
+                  throw new RuntimeException("Error appending protein to list.");
+               }
+            }
          }
          catch(IOException io)
          {

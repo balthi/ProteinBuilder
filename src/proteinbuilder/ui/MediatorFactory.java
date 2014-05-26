@@ -1,6 +1,6 @@
 package proteinbuilder.ui;
 
-public class MediatorFactory
+public final class MediatorFactory
 {
    /**
    * Returns a concrete mediator that extends

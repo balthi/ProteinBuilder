@@ -1,11 +1,13 @@
 package proteinbuilder.io;
 
+import java.lang.IllegalArgumentException;
+
 import static proteinbuilder.config.SessionConfig.FORMAT;
 import static proteinbuilder.config.SessionConfig.JSON;
 import static proteinbuilder.config.SessionConfig.XML;
 import static proteinbuilder.config.SessionConfig.PLAIN;
 
-public class ProteinWriterFactory
+public final class ProteinWriterFactory
 {
    public static ProteinWriter getProteinWriter()
    {
@@ -18,7 +20,7 @@ public class ProteinWriterFactory
          case PLAIN:
             return new PTProteinWriter();
          default:
-            return new JSONProteinWriter();
+            throw new IllegalArgumentException("File type not supported.");
       }
    }
 }

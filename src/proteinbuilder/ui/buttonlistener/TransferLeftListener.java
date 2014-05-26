@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import proteinbuilder.ui.Mediator;
 
-public class TransferLeftListener implements ActionListener
+public final class TransferLeftListener implements ActionListener
 {
    public TransferLeftListener(Mediator mediator)
    {

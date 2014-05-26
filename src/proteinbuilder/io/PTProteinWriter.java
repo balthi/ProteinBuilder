@@ -4,7 +4,7 @@ import java.util.Iterator;
 import proteinbuilder.Protein;
 import proteinbuilder.AminoAcid;
 
-public class PTProteinWriter extends ProteinWriter
+public final class PTProteinWriter extends ProteinWriter
 {
    private static final String DELIMITER = ":";
 

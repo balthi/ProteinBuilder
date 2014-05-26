@@ -9,7 +9,7 @@ import java.lang.RuntimeException;
 import proteinbuilder.Protein;
 import proteinbuilder.AminoAcid;
 
-public class XMLProteinReader extends ProteinReader
+public final class XMLProteinReader extends ProteinReader
 {  
    @Override
    public Protein getProteinFromFile(File f)
@@ -43,11 +43,22 @@ public class XMLProteinReader extends ProteinReader
                   protein.add(AminoAcid.getAminoAcidByName(line.substring(start+1, stop)));
                }
             }
-            br.close();
+            //br.close();
          }
          catch(IOException ioe)
          {
             throw new RuntimeException("Error reading protein from file.");
+         }
+         finally
+         {
+            try
+            {
+               br.close();
+            }
+            catch(IOException i)
+            {
+               throw new RuntimeException("Error reading file.");
+            }
          }
       }
       catch(FileNotFoundException fnfe)

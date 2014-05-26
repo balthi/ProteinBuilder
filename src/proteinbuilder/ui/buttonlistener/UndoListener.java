@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import proteinbuilder.ui.Mediator;
 
-public class UndoListener implements ActionListener
+public final class UndoListener implements ActionListener
 {
    public UndoListener(Mediator mediator)
    {

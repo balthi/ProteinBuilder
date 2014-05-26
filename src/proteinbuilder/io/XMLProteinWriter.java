@@ -4,7 +4,7 @@ import static proteinbuilder.config.SessionConfig.NL;
 import proteinbuilder.AminoAcid;
 import proteinbuilder.Protein;
 
-public class XMLProteinWriter extends ProteinWriter
+public final class XMLProteinWriter extends ProteinWriter
 {
    private static String PROTEIN = "<protein>";
    private static String CLOSE_PROTEIN = "</protein>";

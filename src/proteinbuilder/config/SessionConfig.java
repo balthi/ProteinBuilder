@@ -17,7 +17,7 @@ import proteinbuilder.ProteinList;
 import proteinbuilder.io.ProteinReader;
 import proteinbuilder.io.ProteinReaderFactory;
 
-public class SessionConfig
+public final class SessionConfig
 {
    //Global Properties
    public static final String NL = System.getProperty("line.separator");
@@ -50,6 +50,9 @@ public class SessionConfig
       //Do nothing
    }
    
+   /**
+   * Returns a pointer to the SessionConfig object
+   */
    public static SessionConfig getSessionConfig()
    {
       if(sc == null)

@@ -6,7 +6,7 @@ import javax.swing.JList;
 import proteinbuilder.Protein;
 import proteinbuilder.ui.ProteinMediator;
 
-public class ProteinListener implements ListSelectionListener
+public final class ProteinListener implements ListSelectionListener
 {
    public ProteinListener(ProteinMediator pm)
    {
