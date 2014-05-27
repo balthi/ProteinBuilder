@@ -5,6 +5,7 @@
     <property name="dir.build" value="build"/>
     <property name="dir.dist" value="dist"/>
     <property name="dir.test" value="test"/>
+    <property name="dir.lib" value="lib"/>
     <property name="dir.test.src" value="test/src"/>
     <property name="dir.reports" value="reports"/>
     <property name="dir.umls" value="umls"/>
@@ -17,6 +18,7 @@
         <mkdir dir="${dir.dist}"/>
         <mkdir dir="${dir.reports}"/>
         <mkdir dir="${dir.test}"/>
+        <mkdir dir="${dir.lib}"/>
         <mkdir dir="${dir.test.src}"/>
         <mkdir dir="${dir.umls}"/>
     </target>
@@ -48,7 +50,9 @@
       <junit fork="yes" haltonfailure="no">
                   
          <batchtest fork ="yes" todir="${dir.reports}">
-            <fileset dir="${dir.test.src}"/>
+            <fileset dir="${dir.test.src}">
+                <exclude name="**/*IO_*.java"/>
+            </fileset>
          </batchtest>
          
          <formatter type="plain"/>
@@ -64,25 +68,20 @@
     <target name="jar" depends="test"
         description="Generates .jar in the dist directory">
         <jar jarfile="${dir.dist}/ProteinBuilder.jar"
-            basedir="${dir.build}/proteinbuilder/"
+            basedir="${dir.build}/"
             excludes="**_Test.class">
             
-            <!-- Commented out because there is no main method
             
             <manifest>
-               <attribute name="Main-Class" value="ENTER CLASS WHERE MAIN METHOD CAN BE FOUND"/>
+               <attribute name="Main-Class" value="proteinbuilder.Main"/>
             </manifest>
             
-            -->
+            
         </jar>
     </target>
     
-    <!-- Commented out because there is no main method
-    
     <target name="run" depends="jar">
-        <java jar="${dir.dist}/ENTER PROJECT NAME.jar" fork="true"/>
+        <java jar="${dir.dist}/ProteinBuilder.jar" fork="true"/>
     </target>
-    
-    -->
     
 </project>

@@ -149,6 +149,12 @@ public final class PBMediator extends Mediator implements ProteinMediator
       {
          DNASequence dna = new DNASequence(dnaText);
          displayProtein = dna.getProtein();
+         System.err.println(displayProtein.toString());
+         System.err.format("displayProtein contains %d amino acids \r\n", displayProtein.size());
+         for(AminoAcid aa : displayProtein)
+         {
+            System.err.println(aa.toString());
+         }
          setNameField(EMPTY_STRING);
          setDisplayOnlyText();
       }
@@ -158,7 +164,7 @@ public final class PBMediator extends Mediator implements ProteinMediator
    @Override
    public void transferRight()
    {
-      String text = "";
+      String text = EMPTY_STRING;
       for(AminoAcid aa : displayProtein)
       {
          text = text + aa.getCodons().get(0).toString();
