@@ -17,7 +17,7 @@ public final class Protein implements Comparable<Protein>, Iterable<AminoAcid>
    
    public Protein(String name)
    {
-      this.name = name;
+      setName(name);
       acids = new LinkedList();
    }
    

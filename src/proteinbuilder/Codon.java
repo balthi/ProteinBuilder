@@ -5,27 +5,26 @@ import java.util.EnumSet;
 
 public enum Codon
 {
-   TTT("TTT", AminoAcid.PHENYLALANINE),TTC("TTC", AminoAcid.PHENYLALANINE),TTA("TTA", AminoAcid.LEUCINE),TTG("TTG", AminoAcid.LEUCINE),
-   CTT("CTT", AminoAcid.LEUCINE),CTC("CTC", AminoAcid.LEUCINE),CTA("CTA", AminoAcid.LEUCINE),CTG("CTG", AminoAcid.LEUCINE),
-   ATT("ATT", AminoAcid.ISOLEUCINE),ATC("ATC", AminoAcid.ISOLEUCINE),ATA("ATA", AminoAcid.ISOLEUCINE),ATG("ATG", AminoAcid.METHIONINE),
-   GTT("GTT", AminoAcid.VALINE),GTC("GTC", AminoAcid.VALINE),GTA("GTA", AminoAcid.VALINE),GTG("GTG", AminoAcid.VALINE),
-   TCT("TCT", AminoAcid.SERINE),TCC("TCC", AminoAcid.SERINE),TCA("TCA", AminoAcid.SERINE),TCG("TCG", AminoAcid.SERINE),
-   CCT("CCT", AminoAcid.PROLINE),CCC("CCC", AminoAcid.PROLINE),CCA("CCA", AminoAcid.PROLINE),CCG("CCG", AminoAcid.PROLINE),
-   ACT("ACT", AminoAcid.THREONINE),ACC("ACC", AminoAcid.THREONINE),ACA("ACA", AminoAcid.THREONINE),ACG("ACG", AminoAcid.THREONINE),
-   GCT("GCT", AminoAcid.ALANINE),GCC("GCC", AminoAcid.ALANINE),GCA("GCA", AminoAcid.ALANINE),GCG("GCG", AminoAcid.ALANINE),
-   TAT("TAT", AminoAcid.TYROSINE),TAC("TAC", AminoAcid.TYROSINE),TAA("TAA", AminoAcid.STOP),TAG("TAG", AminoAcid.STOP),
-   CAT("CAT", AminoAcid.HISTIDINE),CAC("CAC", AminoAcid.HISTIDINE),CAA("CAA", AminoAcid.GLUTAMINE),CAG("CAG", AminoAcid.GLUTAMINE),
-   AAT("AAT", AminoAcid.ASPARAGINE),AAC("AAC", AminoAcid.ASPARAGINE),AAA("AAA", AminoAcid.LYSINE),AAG("AAG", AminoAcid.LYSINE),
-   GAT("GAT", AminoAcid.ASPARTIC_ACID),GAC("GAC", AminoAcid.ASPARTIC_ACID),GAA("GAA", AminoAcid.GLUTAMIC_ACID),GAG("GAG", AminoAcid.GLUTAMIC_ACID),
-   TGT("TGT", AminoAcid.CYSTEINE),TGC("TGC", AminoAcid.CYSTEINE),TGA("TGA", AminoAcid.STOP),TGG("TGG", AminoAcid.TRYPTOPHAN),
-   CGT("CGT", AminoAcid.ARGININE),CGC("CGC", AminoAcid.ARGININE),CGA("CGA", AminoAcid.ARGININE),CGG("CGG", AminoAcid.ARGININE),
-   AGT("AGT", AminoAcid.SERINE),AGC("AGC", AminoAcid.SERINE),AGA("AGA", AminoAcid.ARGININE),AGG("AGG", AminoAcid.ARGININE),
-   GGT("GGT", AminoAcid.GLYCINE),GGC("GGC", AminoAcid.GLYCINE),GGA("GGA", AminoAcid.GLYCINE),GGG("GGG", AminoAcid.GLYCINE);
+   TTT("TTT"),TTC("TTC"),TTA("TTA"),TTG("TTG"),
+   CTT("CTT"),CTC("CTC"),CTA("CTA"),CTG("CTG"),
+   ATT("ATT"),ATC("ATC"),ATA("ATA"),ATG("ATG"),
+   GTT("GTT"),GTC("GTC"),GTA("GTA"),GTG("GTG"),
+   TCT("TCT"),TCC("TCC"),TCA("TCA"),TCG("TCG"),
+   CCT("CCT"),CCC("CCC"),CCA("CCA"),CCG("CCG"),
+   ACT("ACT"),ACC("ACC"),ACA("ACA"),ACG("ACG"),
+   GCT("GCT"),GCC("GCC"),GCA("GCA"),GCG("GCG"),
+   TAT("TAT"),TAC("TAC"),TAA("TAA"),TAG("TAG"),
+   CAT("CAT"),CAC("CAC"),CAA("CAA"),CAG("CAG"),
+   AAT("AAT"),AAC("AAC"),AAA("AAA"),AAG("AAG"),
+   GAT("GAT"),GAC("GAC"),GAA("GAA"),GAG("GAG"),
+   TGT("TGT"),TGC("TGC"),TGA("TGA"),TGG("TGG"),
+   CGT("CGT"),CGC("CGC"),CGA("CGA"),CGG("CGG"),
+   AGT("AGT"),AGC("AGC"),AGA("AGA"),AGG("AGG"),
+   GGT("GGT"),GGC("GGC"),GGA("GGA"),GGG("GGG");
    
-   private Codon(String name, AminoAcid aminoAcid)
+   private Codon(String name)
    {
       this.name = name;
-      this.aminoAcid = aminoAcid;
    }
    
    private AminoAcid aminoAcid;
@@ -43,6 +42,20 @@ public enum Codon
    public String getName()
    {
       return name;
+   }
+   
+   /**
+   * Returns true if it successfully sets this codon's AminoAcid
+   * to aa.
+   */
+   public boolean setAminoAcid(AminoAcid aminoAcid)
+   {
+      if(this.aminoAcid == null)
+      {
+         this.aminoAcid = aminoAcid;
+         return true;
+      }
+      return false;
    }
    
    /**

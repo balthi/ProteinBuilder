@@ -14,7 +14,7 @@ public enum AminoAcid
    PHENYLALANINE("PHENYLALANINE (F)", Codon.TTT, Codon.TTC),
    METHIONINE("METHIONINE (M)", Codon.ATG),
    CYSTEINE("CYSTEINE (C)", Codon.TGT, Codon.TGC),
-   ALANINE("ALANINE (A)", Codon.GCT, Codon.GTC, Codon.GCA, Codon.GCG),
+   ALANINE("ALANINE (A)", Codon.GCT, Codon.GCC, Codon.GCA, Codon.GCG),
    GLYCINE("GLYCINE (G)", Codon.GGT, Codon.GGC, Codon.GGA, Codon.GGG),
    PROLINE("PROLINE (P)", Codon.CCT, Codon.CCC, Codon.CCA, Codon.CCG),
    THREONINE("THREONINE (T)", Codon.ACT, Codon.ACC, Codon.ACA, Codon.ACG),
@@ -33,47 +33,82 @@ public enum AminoAcid
    private AminoAcid(String name, Codon c1)
    {
       this.name = name;
-      codons = new ArrayList(1);
+      codons = new ArrayList<Codon>(1);
       codons.add(c1);
+      for(Codon c : codons)
+      {
+         if(!c.setAminoAcid(this))
+         {
+            throw new RuntimeException("Failed to set codon for " + this.toString() + " " + c.toString());
+         }
+      }
    }
    
    private AminoAcid(String name, Codon c1, Codon c2)
    {  
       this.name = name;
-      codons = new ArrayList(2);
+      codons = new ArrayList<Codon>(2);
       codons.add(c1);
       codons.add(c2);
+      for(Codon c : codons)
+      {
+         if(!c.setAminoAcid(this))
+         {
+            throw new RuntimeException("Failed to set codon for " + this.toString() + " " + c.toString());
+         }
+      }
    }
    
    private AminoAcid(String name, Codon c1, Codon c2, Codon c3)
    {
       this.name = name;
-      codons = new ArrayList(3);
+      codons = new ArrayList<Codon>(3);
       codons.add(c1);
       codons.add(c2);
       codons.add(c3);
+      for(Codon c : codons)
+      {
+         if(!c.setAminoAcid(this))
+         {
+            throw new RuntimeException("Failed to set codon for " + this.toString() + " " + c.toString());
+         }
+      }
    }
    
    private AminoAcid(String name, Codon c1, Codon c2, Codon c3, Codon c4)
    {
       this.name = name;
-      codons = new ArrayList(4);
+      codons = new ArrayList<Codon>(4);
       codons.add(c1);
       codons.add(c2);
       codons.add(c3);
       codons.add(c4);
+      for(Codon c : codons)
+      {
+         if(!c.setAminoAcid(this))
+         {
+            throw new RuntimeException("Failed to set codon for " + this.toString() + " " + c.toString());
+         }
+      }
    }
    
    private AminoAcid(String name, Codon c1, Codon c2, Codon c3, Codon c4, Codon c5, Codon c6)
    {
       this.name = name;
-      codons = new ArrayList(6);
+      codons = new ArrayList<Codon>(6);
       codons.add(c1);
       codons.add(c2);
       codons.add(c3);
       codons.add(c4);
       codons.add(c5);
       codons.add(c6);
+      for(Codon c : codons)
+      {
+         if(!c.setAminoAcid(this))
+         {
+            throw new RuntimeException("Failed to set codon for " + this.toString() + " " + c.toString());
+         }
+      }
    }
    
    private ArrayList<Codon> codons;

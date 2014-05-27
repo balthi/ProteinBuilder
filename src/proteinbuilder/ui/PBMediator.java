@@ -149,12 +149,6 @@ public final class PBMediator extends Mediator implements ProteinMediator
       {
          DNASequence dna = new DNASequence(dnaText);
          displayProtein = dna.getProtein();
-         System.err.println(displayProtein.toString());
-         System.err.format("displayProtein contains %d amino acids \r\n", displayProtein.size());
-         for(AminoAcid aa : displayProtein)
-         {
-            System.err.println(aa.toString());
-         }
          setNameField(EMPTY_STRING);
          setDisplayOnlyText();
       }
