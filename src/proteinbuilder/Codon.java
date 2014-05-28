@@ -27,36 +27,15 @@ public enum Codon
       this.name = name;
    }
    
-   private AminoAcid aminoAcid;
    private String name;
    private static final EnumSet<Codon> ALL_CODONS = EnumSet.allOf(Codon.class);
    
-   /**
-   * Returns this codon's corresponding amino acid
-   */
-   public AminoAcid getAminoAcid()
-   {
-      return aminoAcid; 
-   }
    
    public String getName()
    {
       return name;
    }
    
-   /**
-   * Returns true if it successfully sets this codon's AminoAcid
-   * to aa.
-   */
-   public boolean setAminoAcid(AminoAcid aminoAcid)
-   {
-      if(this.aminoAcid == null)
-      {
-         this.aminoAcid = aminoAcid;
-         return true;
-      }
-      return false;
-   }
    
    /**
    * Returns the codon represented by this string of letters

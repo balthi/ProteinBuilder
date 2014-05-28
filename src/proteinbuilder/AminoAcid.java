@@ -35,13 +35,6 @@ public enum AminoAcid
       this.name = name;
       codons = new ArrayList<Codon>(1);
       codons.add(c1);
-      for(Codon c : codons)
-      {
-         if(!c.setAminoAcid(this))
-         {
-            throw new RuntimeException("Failed to set codon for " + this.toString() + " " + c.toString());
-         }
-      }
    }
    
    private AminoAcid(String name, Codon c1, Codon c2)
@@ -50,13 +43,6 @@ public enum AminoAcid
       codons = new ArrayList<Codon>(2);
       codons.add(c1);
       codons.add(c2);
-      for(Codon c : codons)
-      {
-         if(!c.setAminoAcid(this))
-         {
-            throw new RuntimeException("Failed to set codon for " + this.toString() + " " + c.toString());
-         }
-      }
    }
    
    private AminoAcid(String name, Codon c1, Codon c2, Codon c3)
@@ -66,13 +52,6 @@ public enum AminoAcid
       codons.add(c1);
       codons.add(c2);
       codons.add(c3);
-      for(Codon c : codons)
-      {
-         if(!c.setAminoAcid(this))
-         {
-            throw new RuntimeException("Failed to set codon for " + this.toString() + " " + c.toString());
-         }
-      }
    }
    
    private AminoAcid(String name, Codon c1, Codon c2, Codon c3, Codon c4)
@@ -83,13 +62,6 @@ public enum AminoAcid
       codons.add(c2);
       codons.add(c3);
       codons.add(c4);
-      for(Codon c : codons)
-      {
-         if(!c.setAminoAcid(this))
-         {
-            throw new RuntimeException("Failed to set codon for " + this.toString() + " " + c.toString());
-         }
-      }
    }
    
    private AminoAcid(String name, Codon c1, Codon c2, Codon c3, Codon c4, Codon c5, Codon c6)
@@ -102,13 +74,6 @@ public enum AminoAcid
       codons.add(c4);
       codons.add(c5);
       codons.add(c6);
-      for(Codon c : codons)
-      {
-         if(!c.setAminoAcid(this))
-         {
-            throw new RuntimeException("Failed to set codon for " + this.toString() + " " + c.toString());
-         }
-      }
    }
    
    private ArrayList<Codon> codons;
@@ -166,6 +131,14 @@ public enum AminoAcid
          list.add(codon);
       }
       return list;
+   }
+   
+   /**
+   * Returns true if the codon codes for this amino acid
+   */
+   public boolean contains(Codon codon)
+   {
+      return codons.contains(codon);
    }
    
    /**

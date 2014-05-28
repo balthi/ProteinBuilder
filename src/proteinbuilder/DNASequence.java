@@ -60,9 +60,16 @@ public final class DNASequence
    {
       LinkedList<Codon> codons = getCodonSequence();
       LinkedList<AminoAcid> acids = new LinkedList();
+      List<AminoAcid> aminoAcids = AminoAcid.getAllAminoAcids();
       for(Codon c : codons)
       {
-         acids.add(c.getAminoAcid());
+         for(AminoAcid aa : aminoAcids)
+         {
+            if(aa.contains(c))
+            {
+               acids.add(aa);
+            }
+         }
       }
       return acids;
    }
